@@ -397,7 +397,7 @@ class DataStoreMySQL(RDBMSBase):
 
         binds = None
         if len(data) > 0:
-            sql += ' where ' + self.__convert_to_prepared(', ', data)
+            sql += ' where ' + self.__convert_to_prepared(' and ', data)
             binds = list(data.values())
 
         self.connect()

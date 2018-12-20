@@ -89,6 +89,38 @@ class ProviderMySQLTestCase(unittest.TestCase):
                 4,
                 tinyAPI.dsh().count('select count(*) from unit_test_table'))
 
+    def test_deleting_from_table_multi_field(self):
+        if self.__execute_tests is True:
+            tinyAPI.dsh().create(
+                'unit_test_table',
+                {'value': 1,
+                 'ti': '10:00:00'}
+            )
+            tinyAPI.dsh().create(
+                'unit_test_table',
+                {'value': 1,
+                 'ti': '11:00:00'}
+            )
+            tinyAPI.dsh().create(
+                'unit_test_table',
+                {'value': 1,
+                 'ti': '12:00:00'}
+            )
+
+            self.assertEqual(
+                3,
+                tinyAPI.dsh().count('select count(*) from unit_test_table')
+            )
+
+            tinyAPI.dsh().delete(
+                'unit_test_table',
+                {'value': 1, 'ti': '10:00:00'}
+            )
+            self.assertEqual(
+                2,
+                tinyAPI.dsh().count('select count(*) from unit_test_table')
+            )
+
 
     def test_asserting_is_dsh_errors(self):
         try:
